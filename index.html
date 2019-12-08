@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pokemon Type Chart</title>
+    <link href="https://fonts.googleapis.com/css?family=Kosugi+Maru&display=swap" rel="stylesheet">
+    <style>
+        * {
+            user-select: none;
+            font-family: 'Kosugi Maru', sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-content: center;
+            width: auto;
+            background: rgb(0,212,255);
+            background: linear-gradient(120deg, rgba(0,212,255,1) 28%, rgba(255,209,0,1) 28%, rgba(255,209,0,1) 62%, rgba(0,212,255,1) 62%);
+        }
+
+        .selected-box {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            border: 0;
+            padding: auto;
+        }
+        .selected {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 10rem;
+            height: 3rem;
+            background: #eee;
+            border-radius:  1rem;
+            border: 1px solid #666;
+            font-size: 1.25rem;
+        }
+
+        .selection {}
+        .radio-buttons {
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            max-width: 100vw;
+            overflow: auto;
+        }
+        .radio-buttons p:first-child {
+            align-self: center;
+            margin-right: 3rem;
+        }
+        .radio-buttons label {
+            margin: 0.5rem;
+            border: 0;
+            padding: 0;
+            writing-mode: vertical-rl
+        }
+        .radio-buttons input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .radio-disabled {
+            color: #ccc;
+        }
+        #result {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-content: flex-start;
+            margin-top: 1rem;
+        }
+        #result #table1 {
+            margin: 1rem;
+            border-collapse: collapse;
+            display: block;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+            box-shadow: 0 0 0.25rem #666;
+        }
+        ::-webkit-scrollbar {
+            height: 0.5rem; /* for horizontal scrollbars */
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.5);
+        }
+        #result #table1 tr {
+            height: 3rem;
+        }
+        #result #table1 th,
+        #result #table1 td {
+            border: 1px solid #666;
+            text-align: center;
+            min-width: 6rem;
+        }
+
+        #result #table2 tr {
+            height: 3rem;
+        }
+        #result #table2 tr:nth-child(2n+1) {
+            background: rgba(0, 0, 0, 0.25);
+        }
+        #result #table2 th {
+            width: 12rem;
+        }
+        #result #table2 td {
+            line-height: 2rem;
+        }
+        @media screen and (min-width: 376px) {
+            .selected-box {
+                margin: 0 20%;
+            }
+            .selected {
+                width: 18rem;
+                height: 6rem;
+                font-size: 2rem;
+            }
+            .selection {
+                margin: 0 20%;
+            }
+            #result {
+                margin: 3rem 20%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="selected-box">
+        <div id="first-type-selected" class="selected"></div>
+        <div id="second-type-selected" class="selected"></div>
+    </div>
+    <div class="selection">
+        <div class="radio-buttons">
+            <p>ひとつめのタイプ</p>
+            <label><input type="radio" name="first-type" value="ノーマル" checked>ノーマル</input></label>
+            <label><input type="radio" name="first-type" value="ほのお">ほのお</input></label>
+            <label><input type="radio" name="first-type" value="みず">みず</input></label>
+            <label><input type="radio" name="first-type" value="でんき">でんき</input></label>
+            <label><input type="radio" name="first-type" value="くさ">くさ</input></label>
+            <label><input type="radio" name="first-type" value="こおり">こおり</input></label>
+            <label><input type="radio" name="first-type" value="かくとう">かくとう</input></label>
+            <label><input type="radio" name="first-type" value="どく">どく</input></label>
+            <label><input type="radio" name="first-type" value="じめん">じめん</input></label>
+            <label><input type="radio" name="first-type" value="ひこう">ひこう</input></label>
+            <label><input type="radio" name="first-type" value="エスパー">エスパー</input></label>
+            <label><input type="radio" name="first-type" value="むし">むし</input></label>
+            <label><input type="radio" name="first-type" value="いわ">いわ</input></label>
+            <label><input type="radio" name="first-type" value="ゴースト">ゴースト</input></label>
+            <label><input type="radio" name="first-type" value="ドラゴン">ドラゴン</input></label>
+            <label><input type="radio" name="first-type" value="あく">あく</input></label>
+            <label><input type="radio" name="first-type" value="はがね">はがね</input></label>
+            <label><input type="radio" name="first-type" value="フェアリー">フェアリー</input></label>
+        </div>
+        <div class="radio-buttons">
+            <p>ふたつめのタイプ</p>
+            <label><input type="radio" name="second-type" value="ノーマル">ノーマル</input></label>
+            <label><input type="radio" name="second-type" value="ほのお">ほのお</input></label>
+            <label><input type="radio" name="second-type" value="みず">みず</input></label>
+            <label><input type="radio" name="second-type" value="でんき">でんき</input></label>
+            <label><input type="radio" name="second-type" value="くさ">くさ</input></label>
+            <label><input type="radio" name="second-type" value="こおり">こおり</input></label>
+            <label><input type="radio" name="second-type" value="かくとう">かくとう</input></label>
+            <label><input type="radio" name="second-type" value="どく">どく</input></label>
+            <label><input type="radio" name="second-type" value="じめん">じめん</input></label>
+            <label><input type="radio" name="second-type" value="ひこう">ひこう</input></label>
+            <label><input type="radio" name="second-type" value="エスパー">エスパー</input></label>
+            <label><input type="radio" name="second-type" value="むし">むし</input></label>
+            <label><input type="radio" name="second-type" value="いわ">いわ</input></label>
+            <label><input type="radio" name="second-type" value="ゴースト">ゴースト</input></label>
+            <label><input type="radio" name="second-type" value="ドラゴン">ドラゴン</input></label>
+            <label><input type="radio" name="second-type" value="あく">あく</input></label>
+            <label><input type="radio" name="second-type" value="はがね">はがね</input></label>
+            <label><input type="radio" name="second-type" value="フェアリー">フェアリー</input></label>
+            <label><input type="radio" name="second-type" value="なし" checked>なし</input></label>
+        </div>
+    </div><!-- .selection -->
+
+    <div id="result">
+    </div>
+
+    <script>
+(() => {
+    const resultElem = document.querySelector('#result')
+    const typeNames = [
+        'ノーマル', 'ほのお', 'みず', 'でんき', 'くさ', 'こおり', 'かくとう',
+        'どく', 'じめん', 'ひこう', 'エスパー', 'むし', 'いわ', 'ゴースト',
+        'ドラゴン', 'あく', 'はがね', 'フェアリー'
+    ]
+    const typeMultiplyers = [
+        //ノー  ほの みず  でん  くさ こお  かく  どく じめ  ひこ エス  むし  いわ ゴー  ドラ  あく  はが フェア
+        [ 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0 ], // ノーマル
+        [ 1.0, 0.5, 2.0, 1.0, 0.5, 0.5, 1.0, 1.0, 2.0, 1.0, 1.0, 0.5, 2.0, 1.0, 1.0, 1.0, 0.5, 0.5 ], // ほのお
+        [ 1.0, 0.5, 0.5, 2.0, 2.0, 0.5, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.5, 1.0 ], // みず
+        [ 1.0, 1.0, 1.0, 0.5, 1.0, 1.0, 1.0, 1.0, 2.0, 0.5, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.5, 1.0 ], // でんき
+        [ 1.0, 2.0, 0.5, 0.5, 0.5, 2.0, 1.0, 2.0, 0.5, 2.0, 1.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 ], // くさ
+        [ 1.0, 2.0, 1.0, 1.0, 1.0, 0.5, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 1.0, 1.0, 1.0, 2.0, 1.0 ], // こおり
+        [ 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 2.0, 0.5, 0.5, 1.0, 1.0, 0.5, 1.0, 2.0 ], // かくとう
+
+        [ 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 ], //
+        [ 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 ], //
+        [ 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 ], //
+        [ 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 ], //
+        [ 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 ], //
+        [ 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 ], //
+        [ 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 ], //
+        [ 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 ], //
+        [ 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 ], //
+        [ 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 ], //
+        [ 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 ], //
+    ]
+    const zip = (a, b) => a.reduce((carry, v, i) => {
+        try {
+            carry[v] = b[i]
+            return carry
+        } catch (_) { return carry }
+    }, {})
+    const types = zip(typeNames, typeMultiplyers)
+    const range = (min, max, carry) => {
+        if (min >= max) return carry
+        return range(min + 1, max, carry.concat([min]))
+    }
+    const fill = a => _ => a
+    const init = _ => range(0, typeNames.length, [])
+    const prod = (a, b) => a.map((a1, i) => a1 * b[i])
+    const typeOf = type => {
+        if (typeNames.includes(type)) return types[type]
+        return init().map(fill(1.0))
+    }
+    const filter = (obj, p) => 
+        Object.keys(obj).filter(a => p(obj[a]) ? a : null)
+    const renderRow = a => '<tr>'
+        + a.map(a1 => `<td>${isNaN(a1) ? a1 : a1.toFixed(2)}</td>`).join('')
+        + '</tr>'
+    let firstType = document.querySelector('[name=first-type').value
+    let secondType = document.querySelector('[name=second-type').value
+    const firstTypeSelectedView = document.querySelector('#first-type-selected')
+    const secondTypeSelectedView = document.querySelector('#second-type-selected')
+    const doCalc = () => {
+        const initial = init().map(fill(1.0))
+        const first = prod(initial, typeOf(firstType))
+        const second = prod(first, typeOf(secondType))
+        const result = zip(typeNames, second)
+
+        console.log(`${firstType} * ${secondType}`, result)
+        resultElem.innerHTML = `
+            <table id="table2">
+                <tr>
+                    <th>4倍</th>
+                    <td>${filter(result, a => a === 4.0).join('　')}</td>
+                </tr>
+                <tr>
+                    <th>こうかばつぐん</th>
+                    <td>${filter(result, a => a === 2.0).join('　')}</td>
+                </tr>
+                <tr>
+                    <th>いまいち</th>
+                    <td>${filter(result, a => a === 0.5).join('　')}</td>
+                </tr>
+                <tr>
+                    <th>こうかなし</th>
+                    <td>${filter(result, a => a === 0.0).join('　')}</td>
+                </tr>
+            </table>
+            <table id="table1">${renderRow(typeNames)}${renderRow(second)}</table>
+        `
+    }
+    const eventHandler = order => ev => {
+        type = ev.currentTarget.value
+        switch (order) {
+            case 'first':
+                firstType = type
+                document.querySelectorAll(`[name=second-type]`).forEach(a => a.disabled = false)
+                document.querySelector(`[name=second-type][value=${type}]`).disabled = true
+                document.querySelector(`[name=second-type][value=${type}]`)
+                    .closest('.radio-buttons')
+                    .querySelectorAll('.radio-disabled')
+                    .forEach(a => a.classList.remove('radio-disabled'))
+                document.querySelector(`[name=second-type][value=${type}]`)
+                    .parentElement.classList.add('radio-disabled')
+                firstTypeSelectedView.textContent = firstType
+                break
+            case 'second':
+                try {
+                    secondType = type == '' ? null : type
+                    document.querySelectorAll(`[name=first-type]`).forEach(a => a.disabled = false)
+                    document.querySelector(`[name=first-type][value=${type}]`).disabled = true
+                    document.querySelector(`[name=first-type][value=${type}]`)
+                        .closest('.radio-buttons')
+                        .querySelectorAll('.radio-disabled')
+                        .forEach(a => a.classList.remove('radio-disabled'))
+                    document.querySelector(`[name=first-type][value=${type}]`)
+                        .parentElement.classList.add('radio-disabled')
+                    secondTypeSelectedView.textContent = secondType
+                } catch (e) {
+                    document.querySelectorAll(`[name=first-type]`)
+                        .forEach(a => {
+                            a.disabled = false
+                            a.checked = false
+                            a.parentElement.classList.remove('radio-disabled')
+                        })
+                    document.querySelector(`[name=second-type][value=なし]`).click()
+                    secondTypeSelectedView.textContent = secondType
+                }
+                break
+            default: // nop
+        }
+        doCalc()
+    }
+
+    document.querySelectorAll('[name=first-type')
+        .forEach(a => a.addEventListener('click', eventHandler('first')))
+    document.querySelectorAll('[name=second-type')
+        .forEach(a => a.addEventListener('click', eventHandler('second')))
+    firstTypeSelectedView.textContent = firstType
+    secondTypeSelectedView.textContent = secondType
+    doCalc()
+})() // IIFE
+    </script>
+
+</body>
+</html>
