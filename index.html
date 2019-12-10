@@ -35,13 +35,15 @@
             align-items: center;
             width: 10rem;
             height: 3rem;
-            background: #eee;
+            background: rgba(255,255,255,0.5);
             border-radius:  1rem;
             border: 1px solid #666;
             font-size: 1.25rem;
         }
 
-        .selection {}
+        .selection {
+            -webkit-overflow-scrolling: touch;
+        }
         .radio-buttons {
             display: flex;
             justify-content: flex-start;
@@ -57,7 +59,9 @@
             margin: 0.5rem;
             border: 0;
             padding: 0;
-            writing-mode: vertical-rl
+            height: 8rem;
+            -webkit-writing-mode: vertical-rl;
+            writing-mode: vertical-rl;
         }
         .radio-buttons input {
             opacity: 0;
@@ -75,6 +79,7 @@
             margin-top: 1rem;
         }
         #result #table1 {
+            height: 7rem;
             margin: 1rem;
             border-collapse: collapse;
             display: block;
@@ -101,6 +106,9 @@
             min-width: 6rem;
         }
 
+        #result #table2 {
+            width: 100%;
+        }
         #result #table2 tr {
             height: 3rem;
         }
